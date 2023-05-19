@@ -6,24 +6,28 @@ using UnityEngine.SceneManagement;
 public class Finish : MonoBehaviour
 {
     private bool levelCompeled = false;
-    void Start()
-    {
-        
-    }
+    private int correctAnswer = 0;
 
+    public GameObject questionPanel;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name == "Player" && !levelCompeled)
         {
-            levelCompeled = true;
-            Invoke("CompleteLevel", 2f);
+            questionPanel.SetActive(true);
         }
     }
 
     private void CompleteLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void CorrectAnswer ()
+    {
+        correctAnswer++;
+        levelCompeled = true;
+        Invoke("CompleteLevel", 2f);
     }
 
 }

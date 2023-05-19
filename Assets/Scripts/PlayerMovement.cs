@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
 
+    PlayerControls controls;
+
     private Rigidbody2D rb;
     private Animator anim;
     private BoxCollider2D coll;
@@ -30,11 +32,32 @@ public class PlayerMovement : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
     }
 
+    private void Awake()
+    {
+        controls = new PlayerControls();
+        controls.Enable();
+
+        controls.Land.Move.performed += ctx =>
+        {
+            dirX = ctx.ReadValue<float>();
+
+        };
+
+        controls.Land.Jump.performed += ctx =>
+        {
+            if (IsGrounded())
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            }
+        };
+
+    }
+
     // Update is called once per frame
     private void Update()
     {
         // raw -> no lag
-        dirX = Input.GetAxisRaw("Horizontal");
+        //dirX = Input.GetAxisRaw("Horizontal");
 
         rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
 
