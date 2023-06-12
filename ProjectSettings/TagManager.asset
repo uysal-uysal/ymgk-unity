@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Cherry
   - Trap
+  - Chicken
+  - Pig
+  - Cow
   layers:
   - Default
   - TransparentFX
